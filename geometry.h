@@ -15,6 +15,56 @@ typedef struct geometry_triangle geometry_triangle;
 // geometry_point functions (methods) declarations
 
 /**
+*   Function to create new gemetry_point object with given coordinates
+*   In params:
+*       double x        x coordinate
+*       double y        y coordinate
+*   
+*   Out params:
+*       none
+*   
+*   Return:
+*       geometry_point* pointer to created object
+*/
+geometry_point* geometry_point_new(double x, double y);
+
+/**
+*   Function to destroy given geometry_point object
+*   In params:
+*       geometry_point* point       point object that should be freed
+*
+*   Out params/return:
+*       none
+*/
+void geometry_point_destroy(geometry_point* point);
+
+/**
+*   Function to get x coordinate of given point
+*   In params:
+*       goemetry_point* point       point
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       double                      x coordinate of given point
+*/
+double geometry_point_getX(geometry_point* point);
+
+/**
+*   Function to get y coordinate of given point
+*   In params:
+*       goemetry_point* point       point
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       double                      y coordinate of given point
+*/
+double geometry_point_getY(geometry_point* point);
+
+/**
 *   Function to move point by vector
 *   User is expected to provide vector in normalized form;
 *   i.e. unbouned or origin-bounded
@@ -57,6 +107,45 @@ void geometry_point_rotateByAngle(geometry_point* rotated_point, double angle, g
 double geometry_point_calculateDistance(geometry_point* first_point, geometry_point* second_point);
 
 // geometry_segment functions (methods) declarations
+
+/**
+*   Function to create new gemetry_segment object with given points.
+*   Those points don't need to be proper dynamic-allocated objects
+*   In params:
+*       geometry_point* start           starting point of segment
+*       geometry_point* end             ending point of segment
+*   
+*   Out params:
+*       none
+*   
+*   Return:
+*       geometry_segment*               pointer to created object
+*/
+geometry_segment* geometry_segment_new(geometry_point* start, geometry_point* end);
+
+/**
+*   Function to destroy given geometry_segment object
+*   In params:
+*       geometry_segment* segment       segment object that should be freed
+*
+*   Out params/return:
+*       none
+*/
+void geometry_segment_destroy(geometry_segment* segment);
+
+/**
+*   Function to get end points of given geometry_segment object
+*   In params:
+*       geometry_segment* segment       segment object to get ending points
+*       
+*   Out params:
+*       geometry_point* start           starting point of given segment
+*       geometry_point* end             ending point of given segment
+*
+*   Return:
+*       none
+*/
+void geometry_segment_getPoints(geometry_segment* segment, geometry_point* start, geometry_point* end);
 
 /**
 *   Function to move segment by vector
@@ -143,6 +232,47 @@ bool geometry_segment_arePerpendicular(geometry_segment* first_segment, geometry
 geometry_point* geometry_segment_calculateIntersection(geometry_segment* first_segment, geometry_segment* second_segment);
 
 // geometry_triangle functions (methods)
+
+/**
+*   Function to create new gemetry_triangle object with given points.
+*   Those points don't need to be proper dynamic-allocated objects
+*   In params:
+*       geometry_point* first           first point of triangle
+*       geometry_point* second          second point of triangle
+*       geometry_point* third           third point of triangle
+*   
+*   Out params:
+*       none
+*   
+*   Return:
+*       geometry_triangle*               pointer to created object
+*/
+geometry_triangle* geometry_triangle_new(geometry_point* first, geometry_point* second, geometry_point* third);
+
+/**
+*   Function to destroy given geometry_triangle object
+*   In params:
+*       geometry_triangle* triangle       triangle object that should be freed
+*
+*   Out params/return:
+*       none
+*/
+void geometry_triangle_destroy(geometry_triangle* triangle);
+
+/**
+*   Function to get points of given geometry_triangle object
+*   In params:
+*       geometry_triangle* triangle       triangle object to get ending points
+*       
+*   Out params:
+*       geometry_point* first           first point of given segment
+*       geometry_point* second          second point of given segment
+*       geometry_point* third           third point of given segment
+*
+*   Return:
+*       none
+*/
+void geometry_triangle_getPoints(geometry_triangle* triangle, geometry_point* first, geometry_point* second, geometry_point* third);
 
 /**
 *   Function to move triangle by vector
