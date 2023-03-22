@@ -1,6 +1,8 @@
 #ifndef GEOMETRY
 #define GEOMETRY
 
+#include <stdbool.h>
+
 // class objects-structures forward-declarations
 typedef struct geometry_point geometry_point;
 typedef struct geometry_segment geometry_segment;
@@ -12,7 +14,9 @@ typedef struct geometry_segment geometry_segment;
 // and passing another argument in functions is bug-prone.
 typedef struct geometry_triangle geometry_triangle;
 
-// geometry_point functions (methods) declarations
+/*##############################################
+ GEOMETRY_POINT functions (methods) declarations
+###############################################*/
 
 /**
 *   Function to create new gemetry_point object with given coordinates
@@ -106,11 +110,12 @@ void geometry_point_rotateByAngle(geometry_point* rotated_point, double angle, g
 */
 double geometry_point_calculateDistance(geometry_point* first_point, geometry_point* second_point);
 
-// geometry_segment functions (methods) declarations
+/*##############################################
+ GEOMETRY_SEGMENT functions (methods) declarations
+###############################################*/
 
 /**
 *   Function to create new gemetry_segment object with given points.
-*   Those points don't need to be proper dynamic-allocated objects
 *   In params:
 *       geometry_point* start           starting point of segment
 *       geometry_point* end             ending point of segment
@@ -145,7 +150,7 @@ void geometry_segment_destroy(geometry_segment* segment);
 *   Return:
 *       none
 */
-void geometry_segment_getPoints(geometry_segment* segment, geometry_point* start, geometry_point* end);
+void geometry_segment_getPoints(geometry_segment* segment, geometry_point** start, geometry_point** end);
 
 /**
 *   Function to move segment by vector
@@ -231,7 +236,9 @@ bool geometry_segment_arePerpendicular(geometry_segment* first_segment, geometry
 */
 geometry_point* geometry_segment_calculateIntersection(geometry_segment* first_segment, geometry_segment* second_segment);
 
-// geometry_triangle functions (methods)
+/*##############################################
+ GEOMETRY_TRIANGLE functions (methods) declarations
+###############################################*/
 
 /**
 *   Function to create new gemetry_triangle object with given points.
@@ -240,6 +247,7 @@ geometry_point* geometry_segment_calculateIntersection(geometry_segment* first_s
 *       geometry_point* first           first point of triangle
 *       geometry_point* second          second point of triangle
 *       geometry_point* third           third point of triangle
+*       bool is_right                   user should specify if triangle should be considered right-angled
 *   
 *   Out params:
 *       none
@@ -247,7 +255,7 @@ geometry_point* geometry_segment_calculateIntersection(geometry_segment* first_s
 *   Return:
 *       geometry_triangle*               pointer to created object
 */
-geometry_triangle* geometry_triangle_new(geometry_point* first, geometry_point* second, geometry_point* third);
+geometry_triangle* geometry_triangle_new(geometry_point* first, geometry_point* second, geometry_point* third, bool is_right);
 
 /**
 *   Function to destroy given geometry_triangle object
@@ -272,7 +280,20 @@ void geometry_triangle_destroy(geometry_triangle* triangle);
 *   Return:
 *       none
 */
-void geometry_triangle_getPoints(geometry_triangle* triangle, geometry_point* first, geometry_point* second, geometry_point* third);
+void geometry_triangle_getPoints(geometry_triangle* triangle, geometry_point** first, geometry_point** second, geometry_point** third);
+
+/**
+*   Function to get is_right field of given triangle
+*   In params:
+*       geometry_triangle* triangle     triangle to get its field
+*   
+*   Out params:
+*       none
+*
+*   Return:
+*       bool                            logical value of field is_right of the given triangle
+*/
+bool geometry_triangle_getIsRight(geometry_triangle* triangle);
 
 /**
 *   Function to move triangle by vector
