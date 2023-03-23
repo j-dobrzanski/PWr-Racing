@@ -180,8 +180,10 @@ double geometry_point_calculateDistance(geometry_point* first_point, geometry_po
 *                                           false otherwise
 */
 bool geometry_point_liesOnSegment(geometry_point* point, geometry_segment* segment){
-    // TODO
-    return false;
+    if(point == NULL || segment == NULL){
+        return false;
+    }
+    return (segment->end->x - segment->start->x)*(point->y - segment->start->y) == (segment->end->y - segment->start->y)*(point->x - segment->start->x);
 }
 
 /**
