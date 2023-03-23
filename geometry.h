@@ -144,8 +144,8 @@ void geometry_segment_destroy(geometry_segment* segment);
 *       geometry_segment* segment       segment object to get ending points
 *       
 *   Out params:
-*       geometry_point* start           starting point of given segment
-*       geometry_point* end             ending point of given segment
+*       geometry_point** start          pointer to starting point of given segment
+*       geometry_point** end            pointer to ending point of given segment
 *
 *   Return:
 *       none
@@ -270,12 +270,12 @@ void geometry_triangle_destroy(geometry_triangle* triangle);
 /**
 *   Function to get points of given geometry_triangle object
 *   In params:
-*       geometry_triangle* triangle       triangle object to get ending points
+*       geometry_triangle* triangle         triangle object to get ending points
 *       
 *   Out params:
-*       geometry_point* first           first point of given segment
-*       geometry_point* second          second point of given segment
-*       geometry_point* third           third point of given segment
+*       geometry_point** first              pointer to first point of given segment
+*       geometry_point** second             pointer to second point of given segment
+*       geometry_point** third              pointer to third point of given segment
 *
 *   Return:
 *       none

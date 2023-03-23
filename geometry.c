@@ -97,6 +97,26 @@ double geometry_point_getY(geometry_point* point){
 }
 
 /**
+*   Function to move point by vector
+*   User is expected to provide vector in normalized form;
+*   i.e. unbouned or origin-bounded
+*   In parms:
+*       geometry_point* point       point to be moved
+*       double vector_x             x coordinate of vector
+*       double vector_y             y coordinate of vector
+*       
+*   Out params/return:
+*       none (point object is changed)
+*/
+void geometry_point_moveByVector(geometry_point* point, double vector_x, double vector_y){
+    if(point == NULL){
+        return;
+    }
+    point->x += vector_x;
+    point->y += vector_y;
+}
+
+/**
 *   Function to create new gemetry_segment object with given points.
 *   Those points don't need to be proper dynamic-allocated objects
 *   In params:
@@ -162,6 +182,26 @@ void geometry_segment_getPoints(geometry_segment* segment, geometry_point** star
     }
     *start = segment->start;
     *end = segment->end;
+}
+
+/**
+*   Function to move segment by vector
+*   User is expected to provide vector in normalized form;
+*   i.e. unbouned/origin-bounded
+*   In parms:
+*       geometry_segment* segment       segment to be moved
+*       double vector_x                 x coordinate of vector
+*       double vector_y                 y coordinate of vector
+*       
+*   Out params/return:
+*       none (segment object is changed)
+*/
+void geometry_segment_moveByVector(geometry_segment* segment, double vector_x, double vector_y){
+    if(segment == NULL){
+        return;
+    }
+    geometry_point_moveByVector(segment->start, vector_x, vector_y);
+    geometry_point_moveByVector(segment->end, vector_x, vector_y);
 }
 
 /**
@@ -256,4 +296,25 @@ bool geometry_triangle_getIsRight(geometry_triangle* triangle){
         return triangle->is_right;
     }
     return false;
+}
+
+/**
+*   Function to move triangle by vector
+*   User is expected to provide vector in normalized form;
+*   i.e. unbouned or origin-bounded
+*   In parms:
+*       geometry_triangle* triangle     triangle to be moved
+*       double vector_x                 x coordinate of vector
+*       double vector_y                 y coordinate of vector
+*       
+*   Out params/return:
+*       none (triangle object is changed)
+*/
+void geometry_triangle_moveByVector(geometry_triangle* triangle, double vector_x, double vector_y){
+    if(triangle == NULL){
+        return;
+    }
+    geometry_point_moveByVector(triangle->first, vector_x, vector_y);
+    geometry_point_moveByVector(triangle->second, vector_x, vector_y);
+    geometry_point_moveByVector(triangle->third, vector_x, vector_y);
 }
