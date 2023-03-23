@@ -70,8 +70,7 @@ double geometry_point_getY(geometry_point* point);
 
 /**
 *   Function to move point by vector
-*   User is expected to provide vector in normalized form;
-*   i.e. unbouned or origin-bounded
+*   User is expected to provide terminal point of a vector with initial point in (0,0)
 *   In parms:
 *       geometry_point* point       point to be moved
 *       double vector_x             x coordinate of vector
@@ -109,6 +108,21 @@ void geometry_point_rotateByAngle(geometry_point* rotated_point, double angle, g
 *       double                              euclidean distance between two given points
 */
 double geometry_point_calculateDistance(geometry_point* first_point, geometry_point* second_point);
+
+/**
+*   Function to determine if given point lies on given segment
+*   In params:
+*       geometry_point* point               point
+*       geometry_segment* segment           segment
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       bool                                true if point lies on a given segment,
+*                                           false otherwise
+*/
+bool geometry_point_liesOnSegment(geometry_point* point, geometry_segment* segment);
 
 /*##############################################
  GEOMETRY_SEGMENT functions (methods) declarations
@@ -154,8 +168,7 @@ void geometry_segment_getPoints(geometry_segment* segment, geometry_point** star
 
 /**
 *   Function to move segment by vector
-*   User is expected to provide vector in normalized form;
-*   i.e. unbouned/origin-bounded
+*   User is expected to provide terminal point of a vector with initial point in (0,0)
 *   In parms:
 *       geometry_segment* segment       segment to be moved
 *       double vector_x                 x coordinate of vector
@@ -297,8 +310,7 @@ bool geometry_triangle_getIsRight(geometry_triangle* triangle);
 
 /**
 *   Function to move triangle by vector
-*   User is expected to provide vector in normalized form;
-*   i.e. unbouned or origin-bounded
+*   User is expected to provide terminal point of a vector with initial point in (0,0)
 *   In parms:
 *       geometry_triangle* triangle     triangle to be moved
 *       double vector_x                 x coordinate of vector

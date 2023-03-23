@@ -167,6 +167,24 @@ double geometry_point_calculateDistance(geometry_point* first_point, geometry_po
 }
 
 /**
+*   Function to determine if given point lies on given segment
+*   In params:
+*       geometry_point* point               point
+*       geometry_segment* segment           segment
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       bool                                true if point lies on a given segment,
+*                                           false otherwise
+*/
+bool geometry_point_liesOnSegment(geometry_point* point, geometry_segment* segment){
+    // TODO
+    return false;
+}
+
+/**
 *   Function to create new gemetry_segment object with given points.
 *   Those points don't need to be proper dynamic-allocated objects
 *   In params:
