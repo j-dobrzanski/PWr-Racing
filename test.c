@@ -1,6 +1,7 @@
 #include "geometry.h"
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static void geometry_test_point_creationAndDestruction(){
     {   
@@ -91,6 +92,48 @@ static void geometry_test_point_move(){
         assert(geometry_point_getX(point) == start_x + 345.654);
         assert(geometry_point_getY(point) == start_y - 0.001);
         geometry_point_destroy(point);
+    }
+}
+
+static void geometry_test_point_distance(){
+    {
+        double first_x = 0;
+        double first_y = 3;
+        double second_x = 4;
+        double second_y = 0;
+        geometry_point* first = geometry_point_new(first_x, first_y);
+        geometry_point* second = geometry_point_new(second_x, second_y);
+        assert(geometry_point_calculateDistance(first, second) == 5);
+        geometry_point_destroy(first);
+        geometry_point_destroy(second);
+    }
+
+    {
+        double first_x = 0;
+        double first_y = 3;
+        geometry_point* first = geometry_point_new(first_x, first_y);
+        assert(geometry_point_calculateDistance(first, NULL) == -1);
+        geometry_point_destroy(first);
+    }
+
+    {
+        double second_x = 4;
+        double second_y = 0;
+        geometry_point* second = geometry_point_new(second_x, second_y);
+        assert(geometry_point_calculateDistance(NULL, second) == -1);
+        geometry_point_destroy(second);
+    }
+
+    {
+        double first_x = 0;
+        double first_y = -3;
+        double second_x = -4;
+        double second_y = 0;
+        geometry_point* first = geometry_point_new(first_x, first_y);
+        geometry_point* second = geometry_point_new(second_x, second_y);
+        assert(geometry_point_calculateDistance(first, second) == 5);
+        geometry_point_destroy(first);
+        geometry_point_destroy(second);
     }
 }
 
@@ -202,6 +245,38 @@ static void geometry_test_segment_move(){
         geometry_point_destroy(start);
         geometry_point_destroy(end);
         geometry_segment_destroy(segment);
+    }
+}
+
+static void geometry_test_segment_length(){
+    {
+        double first_x = 0;
+        double first_y = 3;
+        double second_x = 4;
+        double second_y = 0;
+        geometry_point* first = geometry_point_new(first_x, first_y);
+        geometry_point* second = geometry_point_new(second_x, second_y);
+        geometry_segment* segment = geometry_segment_new(first, second);
+        assert(geometry_segment_calculateLength(segment) == 5);
+        geometry_point_destroy(first);
+        geometry_point_destroy(second);
+    }
+
+    {
+        double first_x = 0;
+        double first_y = -3;
+        double second_x = -4;
+        double second_y = 0;
+        geometry_point* first = geometry_point_new(first_x, first_y);
+        geometry_point* second = geometry_point_new(second_x, second_y);
+        geometry_segment* segment = geometry_segment_new(first, second);
+        assert(geometry_segment_calculateLength(segment) == 5);
+        geometry_point_destroy(first);
+        geometry_point_destroy(second);
+    }
+
+    {
+        assert(geometry_segment_calculateLength(NULL) == -1);
     }
 }
 
@@ -458,17 +533,50 @@ static void geometry_test_triangle_move(){
     }
 }
 
+static void geometry_test_triangle_primeter(){
+    {
+        double first_x = -3;
+        double first_y = -1;
+        double second_x = 5;
+        double second_y = 5;
+        double third_x = 5;
+        double third_y = -1;
+        geometry_point* first = geometry_point_new(first_x, first_y);
+        geometry_point* second = geometry_point_new(second_x, second_y);
+        geometry_point* third = geometry_point_new(third_x, third_y);
+        geometry_triangle* triangle = geometry_triangle_new(first, second, third, false);
+
+        assert(geometry_triangle_calculatePerimeter(triangle) == 24);
+
+        geometry_triangle_destroy(triangle);
+        geometry_point_destroy(first);
+        geometry_point_destroy(second);
+        geometry_point_destroy(third);
+    }
+
+    {
+        assert(geometry_triangle_calculatePerimeter(NULL) == -1);
+    }
+}
+
 
 int main(){
     geometry_test_point_creationAndDestruction();
     geometry_test_point_getters();
+
     geometry_test_segment_creationAndDestruciotn();
     geometry_test_segment_getters();
+
     geometry_test_triangle_creationAndDestruction();
     geometry_test_triangle_gettersPoints();
     geometry_test_triangle_gettersIsRight();
+
     geometry_test_point_move();
     geometry_test_segment_move();
     geometry_test_triangle_move();
+
+    geometry_test_point_distance();
+    geometry_test_segment_length();
+    geometry_test_triangle_primeter();
     return 0;
 }

@@ -1,5 +1,6 @@
 #include "geometry.h"
 #include <stdlib.h>
+#include <math.h>
 
 // LOCAL FUNCTIONS DECLARATIONS
 
@@ -117,6 +118,29 @@ void geometry_point_moveByVector(geometry_point* point, double vector_x, double 
 }
 
 /**
+*   Function to calculate distance between two given points
+*   In params:
+*       geometry_point* first_point         first point
+*       geometry_point* second_point        second point
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       double                              euclidean distance between two given points
+*/
+double geometry_point_calculateDistance(geometry_point* first_point, geometry_point* second_point){
+    if(first_point == NULL || second_point == NULL){
+        return -1;
+    }
+    double first_x = geometry_point_getX(first_point);
+    double first_y = geometry_point_getY(first_point);
+    double second_x = geometry_point_getX(second_point);
+    double second_y = geometry_point_getY(second_point);
+    return sqrt(pow((first_x - second_x), 2) + pow((first_y - second_y), 2));
+}
+
+/**
 *   Function to create new gemetry_segment object with given points.
 *   Those points don't need to be proper dynamic-allocated objects
 *   In params:
@@ -202,6 +226,27 @@ void geometry_segment_moveByVector(geometry_segment* segment, double vector_x, d
     }
     geometry_point_moveByVector(segment->start, vector_x, vector_y);
     geometry_point_moveByVector(segment->end, vector_x, vector_y);
+}
+
+/**
+*   Function to calculate length of given segment
+*   In params:
+*       geometry_segment* segment       segment to calculate its length
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       double                          length of given segment
+*/
+double geometry_segment_calculateLength(geometry_segment* segment){
+    if(segment == NULL){
+        return -1;
+    }
+    geometry_point* start = NULL;
+    geometry_point* end = NULL;
+    geometry_segment_getPoints(segment, &start, &end);
+    return geometry_point_calculateDistance(start, end);
 }
 
 /**
@@ -317,4 +362,33 @@ void geometry_triangle_moveByVector(geometry_triangle* triangle, double vector_x
     geometry_point_moveByVector(triangle->first, vector_x, vector_y);
     geometry_point_moveByVector(triangle->second, vector_x, vector_y);
     geometry_point_moveByVector(triangle->third, vector_x, vector_y);
+}
+
+/**
+*   Function to calculate perimeter of a given triangle
+*   In params:
+*       geometry_triangle* triangle     triangle to calculate its perimeter
+*
+*   Out params:
+*       none
+*
+*   Return:
+*       double                          calculated perimeter of given triangle,
+*                                       -1 if error(s) occured
+*/
+double geometry_triangle_calculatePerimeter(geometry_triangle* triangle){
+    if(triangle == NULL){
+        return -1;
+    }
+    geometry_point* first = NULL;
+    geometry_point* second = NULL;
+    geometry_point* third = NULL;
+    geometry_triangle_getPoints(triangle, &first, &second, &third);
+    double length_1 = geometry_point_calculateDistance(first, second);
+    double length_2 = geometry_point_calculateDistance(first, third);
+    double length_3 = geometry_point_calculateDistance(second, third);
+    if(length_1 < 0 || length_2 < 0 || length_3 < 0){
+        return -1;
+    }
+    return length_1 + length_2 + length_3;
 }
